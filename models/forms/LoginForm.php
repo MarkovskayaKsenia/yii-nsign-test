@@ -39,7 +39,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Метод отвечает за проверку данных пользователя, пытающегося залогиниться.
+     * Метод отвечает за валидацию данных пользователя, пытающегося залогиниться.
      */
     public function validateUser()
     {
@@ -62,6 +62,10 @@ class LoginForm extends Model
         return \Yii::$app->security->validatePassword($password, $user->password_hash);
     }
 
+    /**
+     * Метод ищет пользователя в базе данных по логину.
+     * @return User|null
+     */
     public function getUser()
     {
         if ($this->_user === null) {

@@ -5,8 +5,6 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
@@ -50,9 +48,9 @@ AppAsset::register($this);
             ['label' => 'Вход', 'url' => ['/login'], 'class' => 'ml-5']
             ) : (
                 '<li class="nav-item  ml-auto">'
-                . Html::beginForm(['/Выйти'], 'post', ['class' => 'form-inline'])
+                . Html::beginForm(['/logout'], 'post', ['class' => 'form-inline'])
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->login . ')',
+                    'Выйти (' . Yii::$app->user->identity->login . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -72,7 +70,6 @@ AppAsset::register($this);
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
-
     </div>
 </footer>
 

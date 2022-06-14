@@ -11,6 +11,10 @@ use yii\web\NotFoundHttpException;
 
 class IngredientsController extends SecuredController
 {
+    /**
+     * Метод, отвечающий за отображение страницы со списком всех ингредиентов
+     * @return string
+     */
     public function actionIndex()
     {
         $ingredients = Ingredient::find()->all();
@@ -26,6 +30,11 @@ class IngredientsController extends SecuredController
         return $this->render('show', ['ingredient' => $ingredient]);
     }
 
+    /**
+     * Метод, отвечающий за отображение страницы создания ингредиента и обработку данных с формы.
+     * @return string|\yii\web\Response
+     * @throws BadRequestHttpException
+     */
     public function actionCreate()
     {
         $createIngredientForm = new CreateIngredientForm();
@@ -49,38 +58,53 @@ class IngredientsController extends SecuredController
         return $this->render('create', ['createIngredientForm' => $createIngredientForm]);
     }
 
+    /**
+     * Метод, отвечающий за отображение формы редактирования ингредиента и обработку данных из формы.
+     * @param int $ingredientId
+     * @return string|\yii\web\Response
+     */
     public function actionEdit(int $ingredientId)
     {
-        $ingredientModel = new Ingredient();
+        $createIngredientForm = new CreateIngredientForm();
         $ingredient = Ingredient::findOne($ingredientId);
 
         if (\Yii::$app->request->isPost) {
-            $ingredient->load(\Yii::$app->request->post());
-            $ingredient->validate();
+            $createIngredientForm->load(\Yii::$app->request->post());
+            $createIngredientForm->validate();
 
-            if (!$ingredient->hasErrors()) {
-                $ingredient->save();
+            if ($createIngredientForm->hasErrors()) {
+                return $this->redirect("/ingredient/edit/{$ingredient->id}");
+            }
+
+            $ingredient = $createIngredientForm->loadIngredientData($ingredient);
+
+            if ($ingredient->save()) {
                 return $this->redirect("/ingredient/show/{$ingredient->id}");
             } else {
-                $ingredientModel->addErrors($ingredient->getErrors());
+                $createIngredientForm->addErrors($ingredient->getErrors());
             }
         }
 
         if ($ingredient) {
             return $this->render('edit', [
                 'ingredient' => $ingredient,
-                'ingredientModel' => $ingredientModel
+                'createIngredientForm' => $createIngredientForm
             ]);
         }
     }
 
     /**
+     * Метод, отвечающий за удаление ингредиента из списка ингредиентов в БД.
      * @param int $ingredientId
      * @return \yii\web\Response
      * @throws \Exception
      */
     public function actionDelete(int $ingredientId)
     {
+        if (!\Yii::$app->request->isPost) {
+            return $this->redirect('/ingredients');
+        }
+
         $ingredient = Ingredient::findOne($ingredientId);
         if ($ingredient) {
             try {

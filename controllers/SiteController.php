@@ -3,12 +3,11 @@
 namespace app\controllers;
 
 use app\models\forms\LoginForm;
+use app\models\forms\SignupForm;
+use app\models\User;
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
 
 
 class SiteController extends SecuredController
@@ -40,7 +39,7 @@ class SiteController extends SecuredController
                 $loginForm->addError('login', 'Нет такого пользователя');
             } else {
                 if ($loginForm->validate()) {
-                   \Yii::$app->user->login($user);
+                    \Yii::$app->user->login($user);
                     return $this->redirect('/');
                 }
             }
@@ -59,9 +58,29 @@ class SiteController extends SecuredController
 
     public function actionSignup()
     {
-        $loginForm = new LoginForm();
+        $signupForm = new SignupForm();
+
+        if (Yii::$app->request->isPost) {
+            $signupForm->load(Yii::$app->request->post());
+            $signupForm->validate();
+            if ($signupForm->hasErrors()) {
+                return $this->render('signup', [
+                    'signupForm' => $signupForm,
+                ]);
+            }
+
+            $user = $signupForm->loadSignupData();
+
+            if ($user->save()) {
+                \Yii::$app->user->login($user);
+                return $this->redirect('/');
+            } else {
+                $signupForm->addErrors($user->errors);
+            }
+        }
+
         return $this->render('signup', [
-            'loginForm' => $loginForm,
+            'signupForm' => $signupForm,
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \app\models\Ingredient $ingredientModel
+ * @var \app\models\forms\CreateIngredientForm $createIngredientForm
  * @var \app\models\Ingredient $ingredient
  */
 
@@ -30,13 +30,13 @@ $this->title = 'Редактирование ингредиента';
 ]); ?>
 
 <fieldset>
-    <?= $form->field($ingredientModel, 'name')
+    <?= $form->field($createIngredientForm, 'name')
         ->textInput([
             'class' => 'form-control d-block mb-2',
             'value' => Html::encode($ingredient->name),
         ])->error(['class' => 'is-invalid text-danger']); ?>
 
-    <?= $form->field($ingredientModel, 'hidden')->checkbox([
+    <?= $form->field($createIngredientForm, 'hidden')->checkbox([
         'class' => 'mr-2',
         'checked' => !!$ingredient->hidden
     ]); ?>

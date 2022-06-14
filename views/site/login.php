@@ -2,8 +2,10 @@
 
 /** @var yii\web\View $this */
 /** @var yii\bootstrap4\ActiveForm $form */
-/** @var \app\models\forms\LoginForm $loginForm */
 
+/** @var LoginForm $loginForm */
+
+use app\models\forms\LoginForm;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -12,7 +14,7 @@ $this->title = 'Вход пользователя';
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
+        'action' => 'login',
         'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}\n{input}\n{error}",
@@ -22,14 +24,14 @@ $this->title = 'Вход пользователя';
         ],
     ]); ?>
 
-        <?= $form->field($loginForm, 'login')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($loginForm, 'login')->textInput(['autofocus' => true]) ?>
 
-        <?= $form->field($loginForm, 'password')->passwordInput() ?>
+    <?= $form->field($loginForm, 'password')->passwordInput() ?>
 
-        <div class="form-group">
-            <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
+    <div class="form-group">
+        <div class="offset-lg-1 col-lg-11">
+            <?= Html::submitButton('Вход', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
         </div>
+    </div>
     <?php ActiveForm::end(); ?>
 </div>

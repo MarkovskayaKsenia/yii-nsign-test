@@ -12,7 +12,7 @@ $this->title = 'Список ингредиентов';
 
 <h2><?= $this->title; ?></h2>
 
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover text-center">
     <thead class="thead-dark">
     <tr>
         <th scope="col">#</th>
@@ -32,7 +32,13 @@ $this->title = 'Список ингредиентов';
             </a>
         </td>
         <td><?= $ingredient->hidden ? "Да" : "Нет"; ?></td>
-        <td><a class="btn btn-outline-danger" href="<?= Url::toRoute(['/ingredients/delete', 'ingredientId' => $ingredient->id]); ?>">Удалить</a></td>
+        <td><?= Html::beginForm(["/ingredient/delete/{$ingredient->id}"], 'post', ['class' => 'form-inline d-inline-block'])
+            . Html::submitButton(
+                'Удалить',
+                ['class' => 'btn btn-danger']
+            )
+            . Html::endForm();
+            ?></td>
         <td><a class="btn btn-outline-secondary" href="<?= Url::toRoute(['/ingredients/edit', 'ingredientId' => $ingredient->id]); ?>">Редактировать</a></td>
         <td><a class="btn btn-outline-secondary" href="<?= Url::toRoute(['/ingredients/show', 'ingredientId' => $ingredient->id]); ?>">Просмотр</a></td>
     </tr>

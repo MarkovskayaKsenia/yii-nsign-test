@@ -2,22 +2,14 @@
 
 namespace app\models\forms;
 
-use app\models\Ingredient;
-use app\models\Recipe;
-use app\models\RecipeIngredient;
+use app\services\RecipeService;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
-use yii\helpers\ArrayHelper;
+
 
 class SearchRecipesForm extends \yii\base\Model
 {
-    public $ingredients_list = [];
-
-    public function attributeLabels()
-    {
-        return [
-        ];
-    }
+    public array $ingredients_list = [];
 
     /**
      * {@inheritdoc}
@@ -29,7 +21,11 @@ class SearchRecipesForm extends \yii\base\Model
         ];
     }
 
-    public function getDataProvider()
+    /**
+     * DataProvider для фильтрации рецептов на главной странице.
+     * @return ActiveDataProvider
+     */
+    public function getDataProvider(): ActiveDataProvider
     {
         $query = (new Query());
         if (!$this->ingredients_list) {
@@ -38,29 +34,22 @@ class SearchRecipesForm extends \yii\base\Model
 
         if ($this->ingredients_list) {
 
-            $recipeIngredients = (new Query())
-                ->select('COUNT(recipe_id) as all_ingredients, recipe_id')
-                ->from('recipe_ingredient')
-                ->groupBy('recipe_id');
+            //Запрос, направленный на подсчет общего количества ингредиентов по каждому рецепту
+            $countAllRecipeIngredients = RecipeService::countAllRecipeIngredients();
 
+            //Запрос, рассчитывающий количество совпадений по ингредиентам в рецептах.
+            $countMatches = RecipeService::countRecipeMatches($countAllRecipeIngredients, $this->ingredients_list);
 
-            $countMatches = $query
-                ->select('COUNT(ri.recipe_id) matches, all_ingredients, recipe.*')
-                ->from('recipe_ingredient as ri')
-                ->leftJoin(['recipe_ingredients' => $recipeIngredients], 'recipe_ingredients.recipe_id = ri.recipe_id')
-                ->leftJoin('recipe', 'recipe.id = ri.recipe_id')
-                ->where(['in', 'ri.ingredient_id', $this->ingredients_list])
-                ->groupBy('ri.recipe_id')->orderBy(['matches' => SORT_DESC]);
-
+            //Фильтры для выбора полных совпадений по ингредиентам
             $fullMatches = $countMatches
                 ->having(['>=', 'matches', 2])
                 ->andHaving(['matches' => count($this->ingredients_list)])
                 ->andHaving(['<=', 'all_ingredients', count($this->ingredients_list)]);
 
-
             if ($fullMatches->exists()) {
                 $query = $fullMatches;
             } else {
+                //Фильтры для выбора частичных совпадений по ингредиентам
                 $partMatches = $countMatches
                     ->orHaving(['<=', 'matches', count($this->ingredients_list)])
                     ->andHaving(['>=', 'matches', 2]);
@@ -69,12 +58,10 @@ class SearchRecipesForm extends \yii\base\Model
 
         }
 
-        $recipesWithHiddenIngredients = (new Query())
-            ->select('recipe_id')
-            ->from('recipe_ingredient')
-            ->rightJoin('ingredient', 'recipe_ingredient.ingredient_id = ingredient.id')
-            ->where(['ingredient.hidden' => Ingredient::IS_HIDDEN])->column();
+        // Массив из 'id' рецептов, в составе которых есть скрытый ингредиент
+        $recipesWithHiddenIngredients = RecipeService::getRecipesWithHiddenIngredients();
 
+        //Исключаем из выборки рецепты со скрытыми ингредиентами.
         $query->andWhere(['not in', 'recipe.id', $recipesWithHiddenIngredients]);
 
         return new ActiveDataProvider([

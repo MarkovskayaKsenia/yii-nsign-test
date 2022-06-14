@@ -5,13 +5,15 @@
  * @var \app\models\forms\SearchRecipesForm $searchRecipesForm
  */
 
+use app\assets\CheckboxesAsset;
 use app\models\Ingredient;
-use app\models\Recipe;
+
 
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+CheckboxesAsset::register($this);
 $this->title = 'Список рецептов';
 ?>
 <div class="site-index">

@@ -20,7 +20,7 @@ class CreateIngredientForm extends Model
             [['hidden'], 'integer', 'min' => 0, 'max' => 1],
             ['name', 'string', 'max' => 25, 'min' => 2,
                 'tooShort' => "Не меньше {min} символов", 'tooLong' => "Не больше {max} символов"],
-           // ['name', 'isNameUnique'],
+            ['name', 'isNameUnique'],
         ];
     }
 
@@ -52,7 +52,6 @@ class CreateIngredientForm extends Model
         if ($ingredient) {
             $this->addError($attribute, 'Такой ингредиент уже существует');
         }
-
     }
 
 }

@@ -15,19 +15,27 @@ use yii\web\NotFoundHttpException;
 
 class RecipesController extends SecuredController
 {
+    /**
+     * Метод, отвечающий за отображение главной страницы с рецептами
+     * @return string
+     */
     public function actionIndex()
     {
-       // $recipes = Recipe::find()->all();
         $searchRecipesForm = new SearchRecipesForm();
         $searchRecipesForm->load(\Yii::$app->request->get());
 
         return $this->render('index', [
             'dataProvider' => $searchRecipesForm->getDataProvider(),
-           // 'recipes' => $recipes,
             'searchRecipesForm' => $searchRecipesForm
         ]);
     }
 
+    /**
+     * Метод, отвечающий за отображение страницы отдельно взятого рецепта
+     * @param int $recipeId
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionShow(int $recipeId)
     {
         $recipe = Recipe::findOne($recipeId);
@@ -38,9 +46,9 @@ class RecipesController extends SecuredController
     }
 
     /**
+     * Метод, отвечающий за отображение странцы создания рецепта и обработку данных, пришедших из формы.
      * @return string|\yii\web\Response
-     * @throws Exception
-     * @throws StaleObjectException
+     * @throws BadRequestHttpException
      */
     public function actionCreate()
     {
@@ -54,6 +62,7 @@ class RecipesController extends SecuredController
                 return $this->render('create', ['createRecipeForm' => $createRecipeForm]);
             }
 
+            //Загрузка данных из формы в модель рецепта
             $recipe = $createRecipeForm->loadRecipeData();
 
             if (!$recipe->validate()) {
@@ -63,6 +72,7 @@ class RecipesController extends SecuredController
             $transaction = \Yii::$app->db->beginTransaction();
             try {
                 $recipe->insert();
+                //Загрузка списка ингредиентов в модель таблицы связей и сохранение в БД
                 $createRecipeForm->loadRecipeIngredientsData($recipe);
                 $transaction->commit();
 
@@ -78,6 +88,7 @@ class RecipesController extends SecuredController
     }
 
     /**
+     * Метод, отвечающий за отображение страницы редактирования рецепта и обработку данных из формы.
      * @param int $recipeId
      * @return string
      * @throws \Exception
@@ -122,11 +133,16 @@ class RecipesController extends SecuredController
     }
 
     /**
+     * Метод, отвечающий за удаление рецепта из БД.
      * @param int $recipeId
      * @throws BadRequestHttpException
      */
     public function actionDelete(int $recipeId)
     {
+        if (!\Yii::$app->request->isPost) {
+            $this->redirect('/');
+        }
+
         $recipe = Recipe::findOne($recipeId);
         if ($recipe) {
             $transaction = \Yii::$app->db->beginTransaction();
@@ -135,7 +151,7 @@ class RecipesController extends SecuredController
                 CreateRecipeForm::deleteRecipeIngredients($recipe);
                 $recipe->delete();
                 $transaction->commit();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $transaction->rollBack();
                 throw new BadRequestHttpException('Не удалось удалить рецепт');
             }

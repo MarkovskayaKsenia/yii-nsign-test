@@ -10,9 +10,9 @@ use yii\base\Model;
 
 class CreateRecipeForm extends Model
 {
-    public $ingredients_list;
-    public $title;
-    public $description;
+    public  $ingredients_list;
+    public  $title;
+    public  $description;
 
     /**
      * {@inheritdoc}
@@ -41,6 +41,7 @@ class CreateRecipeForm extends Model
     }
 
     /**
+     * Метод, отвечающий за удаление ингредиентов в рецепте на таблице связей
      * @param Recipe $recipe
      * @throws \yii\db\StaleObjectException
      */
@@ -53,6 +54,11 @@ class CreateRecipeForm extends Model
         }
     }
 
+    /**
+     * Метод, отвечающий за загрузку данных из формы создания/редактирования рецепта в модель рецепта.
+     * @param Recipe|null $recipe
+     * @return Recipe|null
+     */
     public function loadRecipeData(Recipe $recipe = null)
     {
         if (!$recipe) {
@@ -65,6 +71,10 @@ class CreateRecipeForm extends Model
         return $recipe;
     }
 
+    /**
+     * Метод, отвечающий за загрузку ингредиентов рецепта на таблицу связей в БД из формы создании/редактировании рецепта
+     * @param Recipe $recipe
+     */
     public function loadRecipeIngredientsData(Recipe $recipe)
     {
         foreach ($this->ingredients_list as $ingredientData) {

@@ -15,5 +15,11 @@ $this->title = 'Просмотр рецептов';
 <h4 class="text-primary">Список ингредиентов:</h4>
 <?= Html::ol(ArrayHelper::map($recipe->recipeIngredientsList, 'id', 'name')); ?>
 
-<a class="btn btn-danger " href="<?= Url::to("/recipe/delete/{$recipe->id}"); ?>">Удалить</a>
-<a class="btn btn-primary" href="<?= Url::to("/recipe/edit/{$recipe->id}"); ?>">Редактировать</a>
+<?= Html::beginForm(["/recipe/delete/{$recipe->id}"], 'post', ['class' => 'form-inline d-inline-block'])
+. Html::submitButton(
+    'Удалить',
+    ['class' => 'btn btn-danger mr-4']
+)
+. Html::endForm();
+?>
+<a class="btn btn-primary d-inline-block" href="<?= Url::to("/recipe/edit/{$recipe->id}"); ?>">Редактировать</a>
