@@ -25,8 +25,7 @@ class SiteController extends SecuredController
     }
 
     /**
-     * Login action.
-     *
+     * Метод, отвечающий за обработку входа пользователя на сайт
      * @return Response|string
      */
     public function actionLogin()
@@ -50,12 +49,20 @@ class SiteController extends SecuredController
         ]);
     }
 
+    /**
+     * Разлогин пользователя
+     * @return Response
+     */
     public function actionLogout()
     {
         \Yii::$app->user->logout();
         return $this->goHome();
     }
 
+    /**
+     * Метод, отвечающий за отображение страницы регистрации пользователя и обработку запроса формы.
+     * @return string|Response
+     */
     public function actionSignup()
     {
         $signupForm = new SignupForm();

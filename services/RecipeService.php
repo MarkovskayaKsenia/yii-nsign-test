@@ -1,4 +1,5 @@
 <?php
+
 namespace app\services;
 
 use app\models\Ingredient;

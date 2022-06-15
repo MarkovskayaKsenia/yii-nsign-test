@@ -7,9 +7,7 @@ namespace app\controllers;
 use app\models\forms\CreateRecipeForm;
 use app\models\forms\SearchRecipesForm;
 use app\models\Recipe;
-use yii\db\Exception;
 use yii\db\StaleObjectException;
-
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 

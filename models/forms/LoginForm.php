@@ -45,7 +45,7 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user ||  !self::validatePassword($user, $this->password)) {
+            if (!$user || !self::validatePassword($user, $this->password)) {
                 $this->addError('password', 'Неверный email или пароль!');
             }
         }

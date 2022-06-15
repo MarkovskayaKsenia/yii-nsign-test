@@ -7,8 +7,6 @@
 
 use app\assets\CheckboxesAsset;
 use app\models\Ingredient;
-
-
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;

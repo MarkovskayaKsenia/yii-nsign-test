@@ -10,9 +10,9 @@ use yii\base\Model;
 
 class CreateRecipeForm extends Model
 {
-    public  $ingredients_list;
-    public  $title;
-    public  $description;
+    public $ingredients_list;
+    public $title;
+    public $description;
 
     /**
      * {@inheritdoc}

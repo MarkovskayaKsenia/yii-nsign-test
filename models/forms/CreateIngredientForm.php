@@ -62,7 +62,7 @@ class CreateIngredientForm extends Model
     public function isNameUnique($attribute)
     {
         $ingredient = Ingredient::find()->where(['name' => $this->name])->one();
-        if ($ingredient  && !$ingredient->id = $this->id) {
+        if ($ingredient && !$ingredient->id = $this->id) {
             $this->addError($attribute, 'Такой ингредиент уже существует');
         }
     }

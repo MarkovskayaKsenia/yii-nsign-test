@@ -2,9 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-use yii\helpers\ArrayHelper;
-
 /**
  * This is the model class for table "recipe".
  *
@@ -65,7 +62,7 @@ class Recipe extends \yii\db\ActiveRecord
     public function getRecipeIngredientsList()
     {
         return $this->hasMany(Ingredient::class, ['id' => 'ingredient_id'])
-            ->viaTable('recipe_ingredient', ['recipe_id' => 'id'])->inverseOf('recipeIngredients');
+            ->viaTable('recipe_ingredient', ['recipe_id' => 'id']);
     }
 
     /**

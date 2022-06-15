@@ -21,6 +21,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     const USER_ROLE = 'user';
     const ADMIN_ROLE = 'admin';
+
     /**
      * {@inheritdoc}
      */
@@ -68,9 +69,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Recipe::class, ['user_id' => 'id']);
     }
 
+    /**
+     * Метод, проверяющий является ли пользователь админом
+     * @return bool
+     */
     public function isAdmin()
     {
-      return !!User::findOne(['id' => Yii::$app->user->getId(), 'role' => self::ADMIN_ROLE]);
+        return !!User::findOne(['id' => Yii::$app->user->getId(), 'role' => self::ADMIN_ROLE]);
     }
 
     public static function findIdentity($id)

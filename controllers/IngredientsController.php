@@ -74,9 +74,9 @@ class IngredientsController extends SecuredController
 
             if ($createIngredientForm->hasErrors()) {
                 return $this->render('edit', [
-                'ingredient' => $ingredient,
-                'createIngredientForm' => $createIngredientForm
-            ]);
+                    'ingredient' => $ingredient,
+                    'createIngredientForm' => $createIngredientForm
+                ]);
             }
 
             $ingredient = $createIngredientForm->loadIngredientData($ingredient);

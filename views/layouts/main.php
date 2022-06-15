@@ -40,6 +40,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
+            ['label' => 'Рецепты', 'url' => ['/'], 'visible' => true],
             ['label' => 'Игредиенты', 'url' => ['/ingredients/index'], 'visible' => $visibleForAdmin],
             ['label' => 'Создать рецепт', 'url' => ['/recipe/create'], 'visible' => $visibleForAdmin],
             ['label' => 'Создать игредиент', 'url' => ['/ingredients/create'], 'visible' => $visibleForAdmin],

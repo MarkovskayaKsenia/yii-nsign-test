@@ -9,7 +9,7 @@ use yii\web\Controller;
 class SecuredController extends Controller
 {
     /**
-     * Метод, определяющий уровень доступа для залогиненных и незалогиненных пользователей.
+     * Метод, определяющий уровень доступа для залогиненных и незалогиненных пользователей, для простых пользователей и админов.
      * @return array|array[]
      */
     public function behaviors()

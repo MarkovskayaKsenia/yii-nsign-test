@@ -56,7 +56,7 @@ class RecipeIngredient extends \yii\db\ActiveRecord
      */
     public function getIngredient()
     {
-        return $this->hasOne(Ingredient::class , ['id' => 'ingredient_id']);
+        return $this->hasOne(Ingredient::class, ['id' => 'ingredient_id']);
     }
 
     /**

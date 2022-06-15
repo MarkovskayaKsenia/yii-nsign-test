@@ -37,7 +37,7 @@ class Ingredient extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['hidden'], 'integer', 'min' => 0, 'max' => 1],
             ['name', 'string', 'max' => 25, 'min' => 2,
-               'tooShort' => "Не меньше {min} символов", 'tooLong' => "Не больше {max} символов"],
+                'tooShort' => "Не меньше {min} символов", 'tooLong' => "Не больше {max} символов"],
             [['name'], 'unique', 'message' => 'Такой ингредиент уже существует'],
         ];
     }

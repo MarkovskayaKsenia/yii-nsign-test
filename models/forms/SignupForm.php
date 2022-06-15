@@ -39,6 +39,10 @@ class SignupForm extends Model
         ];
     }
 
+    /**
+     * Метод, отвечающий за проверку уникальности логина пользователя.
+     * @param $attribute
+     */
     public function isLoginUnique($attribute)
     {
         $user = User::find()->where([$attribute => $this->$attribute])->one();
@@ -47,6 +51,11 @@ class SignupForm extends Model
         }
     }
 
+    /**
+     * Метод, отвечающий за загрузку данных из формы регистрации в модель User
+     * @return User
+     * @throws \yii\base\Exception
+     */
     public function loadSignupData()
     {
         $user = new User();
