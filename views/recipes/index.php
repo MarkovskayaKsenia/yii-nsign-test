@@ -31,7 +31,7 @@ $this->title = 'Список рецептов';
                                     href="<?= Url::to("recipe/show/{$recipe['id']}") ?>"><?= Html::encode($recipe['title']); ?></a>
                         </div>
                         <div class="card-body d-flex flex-column">
-                            <p class="card-text h-25"><?= Html::encode($recipe['description']); ?></p>
+                            <p class="card-text"><?= Html::encode($recipe['description']); ?></p>
                         </div>
                         <?php if (array_key_exists('matches', $recipe)): ?>
                         <p class="content p-2"><?= "Совпадений по ингредиентам: {$recipe['matches']}</p>"; ?>

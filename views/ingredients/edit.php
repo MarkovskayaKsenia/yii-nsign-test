@@ -40,6 +40,8 @@ $this->title = 'Редактирование ингредиента';
         'class' => 'mr-2',
         'checked' => !!$ingredient->hidden
     ]); ?>
+
+    <?= $form->field($createIngredientForm, 'id')->hiddenInput(['value' => $ingredient->id])->label(false); ?>
 </fieldset>
 
 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']); ?>

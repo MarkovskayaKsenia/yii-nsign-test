@@ -73,7 +73,10 @@ class IngredientsController extends SecuredController
             $createIngredientForm->validate();
 
             if ($createIngredientForm->hasErrors()) {
-                return $this->redirect("/ingredient/edit/{$ingredient->id}");
+                return $this->render('edit', [
+                'ingredient' => $ingredient,
+                'createIngredientForm' => $createIngredientForm
+            ]);
             }
 
             $ingredient = $createIngredientForm->loadIngredientData($ingredient);

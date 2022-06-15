@@ -47,12 +47,6 @@ class m220606_151143_create_recipe_ingredient_table extends Migration
      */
     public function safeDown()
     {
-
-        $this->dropIndex(
-            'recipe_id-ingredient_id',
-            'recipe_ingredient'
-        );
-
         $this->dropForeignKey(
             'fk-recipe_ingredient-recipe_id-recipe-id',
             'recipe_ingredient'
@@ -60,6 +54,11 @@ class m220606_151143_create_recipe_ingredient_table extends Migration
 
         $this->dropForeignKey(
             'fk-recipe_ingredient-ingredient_id-ingredient-id',
+            'recipe_ingredient'
+        );
+
+        $this->dropIndex(
+            'recipe_id-ingredient_id',
             'recipe_ingredient'
         );
 

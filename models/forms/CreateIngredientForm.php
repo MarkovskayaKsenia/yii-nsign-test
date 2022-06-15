@@ -9,13 +9,14 @@ use yii\base\Model;
 
 class CreateIngredientForm extends Model
 {
+    public $id;
     public $name;
     public $hidden;
 
     public function rules()
     {
         return [
-            [['name', 'hidden'], 'safe'],
+            [['name', 'hidden', 'id'], 'safe'],
             [['name'], 'required'],
             [['hidden'], 'integer', 'min' => 0, 'max' => 1],
             ['name', 'string', 'max' => 25, 'min' => 2,
@@ -48,8 +49,8 @@ class CreateIngredientForm extends Model
 
     public function isNameUnique($attribute)
     {
-        $ingredient = Ingredient::find()->where([$attribute => $this->$attribute])->one();
-        if ($ingredient) {
+        $ingredient = Ingredient::find()->where(['name' => $this->name])->one();
+        if ($ingredient  && !$ingredient->id = $this->id) {
             $this->addError($attribute, 'Такой ингредиент уже существует');
         }
     }

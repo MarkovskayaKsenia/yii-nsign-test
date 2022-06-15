@@ -1,0 +1,17 @@
+.card-text {
+ overflow: hidden;
+ display: -webkit-box;
+-moz-line-clamp: 6;
+-webkit-line-clamp: 6;
+ -webkit-box-orient: vertical;
+ -ms-flex-item-align: center;
+}
+
+.card-header {
+ overflow: hidden;
+ display: -webkit-box;
+ -moz-line-clamp: 2;
+ -webkit-line-clamp: 2;
+ -webkit-box-orient: vertical;
+ -ms-flex-item-align: center;
+}

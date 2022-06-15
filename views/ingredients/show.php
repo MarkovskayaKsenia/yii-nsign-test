@@ -10,6 +10,7 @@ $this->title = 'Просмотр ингредиента';
 ?>
 <h2><?= $this->title ?></h2>
 <p><?= Html::encode($ingredient->name); ?></p>
+<div><label><?= Html::checkbox('hidden', !!$ingredient->hidden, ['disabled' => true])?>&nbsp; Скрыт</label></div>
 
 <?= Html::beginForm(["/ingredient/delete/{$ingredient->id}"], 'post', ['class' => 'form-inline d-inline-block'])
 . Html::submitButton(
