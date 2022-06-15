@@ -65,6 +65,7 @@ class Ingredient extends \yii\db\ActiveRecord
     }
 
     /**
+     * Метод возвращает двумерныц массив из не скрытых ингредиентов.
      * @return array
      */
     public static function getNotHiddenIngredientMap(): array

@@ -33,9 +33,9 @@ class Recipe extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'description', 'user_id'], 'required'],
-            [['description'], 'string'],
+            [['description'], 'string', 'min' => 20],
             [['user_id'], 'integer'],
-            [['title'], 'string', 'max' => 150],
+            [['title'], 'string', 'min' => 5,'max' => 150],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

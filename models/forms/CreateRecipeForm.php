@@ -72,7 +72,7 @@ class CreateRecipeForm extends Model
     }
 
     /**
-     * Метод, отвечающий за загрузку ингредиентов рецепта на таблицу связей в БД из формы создании/редактировании рецепта
+     * Метод, отвечающий за загрузку ингредиентов рецепта в таблицу связей БД из формы создании/редактировании рецепта.
      * @param Recipe $recipe
      */
     public function loadRecipeIngredientsData(Recipe $recipe)

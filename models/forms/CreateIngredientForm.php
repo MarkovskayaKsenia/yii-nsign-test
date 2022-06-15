@@ -13,6 +13,9 @@ class CreateIngredientForm extends Model
     public $name;
     public $hidden;
 
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -37,6 +40,11 @@ class CreateIngredientForm extends Model
         ];
     }
 
+    /**
+     * Загрузка данных из формы в модель Ingredient.
+     * @param Ingredient|null $ingredient
+     * @return Ingredient|null
+     */
     public function loadIngredientData(Ingredient $ingredient = null)
     {
         if (!$ingredient) {
@@ -47,6 +55,10 @@ class CreateIngredientForm extends Model
         return $ingredient;
     }
 
+    /**
+     * Метод проверки ингредиента на уникальность в БД.
+     * @param $attribute
+     */
     public function isNameUnique($attribute)
     {
         $ingredient = Ingredient::find()->where(['name' => $this->name])->one();

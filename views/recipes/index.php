@@ -69,6 +69,7 @@ $this->title = 'Список рецептов';
             </fieldset>
             <?= Html::submitButton('Найти', ['class' => 'btn btn-primary mt-2', 'id' => 'search-recipe-button']); ?>
             <?php ActiveForm::end(); ?>
+            <a class="btn btn-primary mt-2" href="<?= Url::to('/'); ?>">Сбросить фильтры</a>
         </section>
     </div>
 
