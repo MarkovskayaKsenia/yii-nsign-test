@@ -40,12 +40,12 @@ class RecipeService
      * @param array $ingredientsList
      * @return Query
      */
-    public static function countRecipeMatches(Query $countAllRecipeIngredients, array $ingredientsList)
+    public static function countRecipeMatches(array $ingredientsList)
     {
         return $query = (new Query())
             ->select('COUNT(ri.recipe_id) matches, all_ingredients, recipe.*')
             ->from('recipe_ingredient as ri')
-            ->leftJoin(['recipe_ingredients' => $countAllRecipeIngredients], 'recipe_ingredients.recipe_id = ri.recipe_id')
+            ->leftJoin(['recipe_ingredients' => self::countAllRecipeIngredients()], 'recipe_ingredients.recipe_id = ri.recipe_id')
             ->leftJoin('recipe', 'recipe.id = ri.recipe_id')
             ->where(['in', 'ri.ingredient_id', $ingredientsList])
             ->groupBy('ri.recipe_id')->orderBy(['matches' => SORT_DESC]);

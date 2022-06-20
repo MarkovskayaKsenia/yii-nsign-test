@@ -34,11 +34,8 @@ class SearchRecipesForm extends \yii\base\Model
 
         if ($this->ingredients_list) {
 
-            //Запрос, направленный на подсчет общего количества ингредиентов по каждому рецепту
-            $countAllRecipeIngredients = RecipeService::countAllRecipeIngredients();
-
             //Запрос, рассчитывающий количество совпадений по ингредиентам в рецептах.
-            $countMatches = RecipeService::countRecipeMatches($countAllRecipeIngredients, $this->ingredients_list);
+            $countMatches = RecipeService::countRecipeMatches($this->ingredients_list);
 
             //Фильтры для выбора полных совпадений по ингредиентам
             $fullMatches = $countMatches
